@@ -1,14 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { static as serveStatic } from 'express';
+import { join } from 'path';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
+
   // CORS configuration
-  app.enableCors();
-  
+  const configuredOrigin = process.env.PICKTOR_WEB_ORIGIN?.trim();
+  app.enableCors({
+    origin:
+      process.env.NODE_ENV === 'production' && configuredOrigin
+        ? configuredOrigin
+        : true,
+    credentials: true,
+  });
+  app.use('/uploads', serveStatic(join(process.cwd(), 'uploads')));
+
   // Global Validation Pipe
   app.useGlobalPipes(
     new ValidationPipe({
@@ -30,4 +40,4 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap();

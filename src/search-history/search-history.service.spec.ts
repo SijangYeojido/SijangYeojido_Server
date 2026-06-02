@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { SearchHistory } from './entities/search-history.entity';
 import { SearchHistoryService } from './search-history.service';
 
 describe('SearchHistoryService', () => {
@@ -6,7 +8,10 @@ describe('SearchHistoryService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SearchHistoryService],
+      providers: [
+        SearchHistoryService,
+        { provide: getRepositoryToken(SearchHistory), useValue: {} },
+      ],
     }).compile();
 
     service = module.get<SearchHistoryService>(SearchHistoryService);

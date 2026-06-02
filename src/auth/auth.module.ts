@@ -15,10 +15,18 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET') || 'secretKey',
-        signOptions: { expiresIn: '12h' },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const secret =
+          configService.get<string>('JWT_SECRET') ||
+          configService.get<string>('JWT_ACCESS_SECRET');
+        if (!secret && configService.get<string>('NODE_ENV') === 'production') {
+          throw new Error('JWT_SECRET or JWT_ACCESS_SECRET is required');
+        }
+        return {
+          secret: secret || 'secretKey',
+          signOptions: { expiresIn: '12h' },
+        };
+      },
     }),
   ],
   controllers: [AuthController],

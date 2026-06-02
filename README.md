@@ -23,13 +23,28 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+SijangYeojido backend API built with NestJS, TypeORM, PostgreSQL, JWT auth, and Swagger.
+
+## Feature API Summary
+
+- Markets: `GET /markets`, `GET /markets/search`, `GET /markets/:id`, `GET /markets/:id/map`, admin market CRUD, admin market zone CRUD.
+- Map: `GET /map/markets/nearby`, `GET /map/markets/:marketId`, `GET /map/markets/:marketId/viewport`, `GET /map/stores/search`.
+- Stores: `GET /markets/:marketId/stores`, `GET /stores/search`, `GET /stores/:id`, `GET /stores/:id/location`.
+- Seller stores: `POST /seller/stores`, `PATCH /seller/stores/:id`, store photo add/delete.
+- Products: `GET /stores/:storeId/products`, `GET /products/:id`, `GET /products/:id/price-history`, `GET /products/compare`.
+- Seller products: product create/update/delete and `PATCH /seller/products/:id/price`.
+- Reports: `POST /reports`, admin report list/status update.
+- System logs: `POST /system/logs`, `GET /admin/system/logs`; API requests are also logged automatically.
+
+Swagger is available at `/api` when the server is running.
 
 ## Project setup
 
 ```bash
 $ npm install
 ```
+
+Create `.env` from `.env.example` and configure PostgreSQL before starting the server.
 
 ## Compile and run the project
 

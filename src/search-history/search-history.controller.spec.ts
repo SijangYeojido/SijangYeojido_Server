@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SearchHistoryController } from './search-history.controller';
+import { SearchHistoryService } from './search-history.service';
 
 describe('SearchHistoryController', () => {
   let controller: SearchHistoryController;
@@ -7,6 +8,7 @@ describe('SearchHistoryController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SearchHistoryController],
+      providers: [{ provide: SearchHistoryService, useValue: {} }],
     }).compile();
 
     controller = module.get<SearchHistoryController>(SearchHistoryController);

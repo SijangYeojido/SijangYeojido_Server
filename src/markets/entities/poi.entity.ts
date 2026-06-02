@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Market } from './market.entity';
 
 export enum PoiType {
@@ -19,11 +25,23 @@ export class Poi {
   })
   type: PoiType;
 
+  @Column({ nullable: true })
+  name: string;
+
+  @Column('text', { nullable: true })
+  description: string;
+
   @Column('float')
   latitude: number;
 
   @Column('float')
   longitude: number;
+
+  @Column('float', { nullable: true })
+  mapX: number;
+
+  @Column('float', { nullable: true })
+  mapY: number;
 
   @ManyToOne(() => Market, (market) => market.pois, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'marketId' })
