@@ -164,6 +164,11 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
+  async deleteAccount(userId: number): Promise<boolean> {
+    const result = await this.usersRepository.delete(userId);
+    return (result.affected ?? 0) > 0;
+  }
+
   private getAllowedSelfSelectedRole(role?: Role): Role {
     return role === Role.MERCHANT ? Role.MERCHANT : Role.USER;
   }

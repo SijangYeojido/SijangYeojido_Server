@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Patch,
@@ -40,5 +41,15 @@ export class UsersController {
     const user = await this.usersService.updateProfile(request.user.id, dto);
     if (!user) throw new NotFoundException('User not found');
     return user;
+  }
+
+  @Delete('me')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Delete current authenticated user account' })
+  async deleteMe(@Req() request: AuthenticatedRequest) {
+    const deleted = await this.usersService.deleteAccount(request.user.id);
+    if (!deleted) throw new NotFoundException('User not found');
+    return { deleted: true };
   }
 }
