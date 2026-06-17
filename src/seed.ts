@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { scryptSync } from 'crypto';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AppModule } from './app.module';
@@ -80,30 +79,6 @@ async function bootstrap() {
     email: 'dev-user@sijang.local',
     name: '개발 사용자',
     role: Role.USER,
-  });
-  await ensureUser(users, {
-    provider: OAuthProvider.DEV,
-    providerId: 'review-user',
-    email: 'review-user@sijangyeojido.com',
-    passwordHash: hashSeedPassword('SijangReview2026!'),
-    name: '심사 사용자',
-    role: Role.USER,
-  });
-  await ensureUser(users, {
-    provider: OAuthProvider.DEV,
-    providerId: 'review-merchant',
-    email: 'review-merchant@sijangyeojido.com',
-    passwordHash: hashSeedPassword('SijangReview2026!'),
-    name: '심사 상인',
-    role: Role.MERCHANT,
-  });
-  await ensureUser(users, {
-    provider: OAuthProvider.DEV,
-    providerId: 'review-admin',
-    email: 'review-admin@sijangyeojido.com',
-    passwordHash: hashSeedPassword('SijangReview2026!'),
-    name: '심사 운영자',
-    role: Role.ADMIN,
   });
 
   const market = await ensureMarket(markets, {
@@ -520,12 +495,6 @@ async function ensureUser(
     Object.assign(user, values);
   }
   return repository.save(user);
-}
-
-function hashSeedPassword(password: string) {
-  const salt = 'sijang-review-seed';
-  const hash = scryptSync(password, salt, 64).toString('hex');
-  return `${salt}:${hash}`;
 }
 
 async function ensureMarket(

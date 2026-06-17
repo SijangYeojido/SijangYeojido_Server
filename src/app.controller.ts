@@ -32,7 +32,6 @@ export class AppController {
       '시장여지도 이용 중 문제가 발생하면 아래 지원 메일로 문의해 주세요.',
       '지원 메일: infinity.element.rpg@gmail.com',
       '문의 시 사용 중인 기기, iOS 버전, 앱 버전, 발생 화면, 재현 절차를 함께 보내주시면 더 빠르게 확인할 수 있습니다.',
-      '앱 심사용 데모 계정은 App Store Connect 심사 메모에 제공된 계정을 사용해 주세요.',
     ]);
   }
 
